@@ -9,6 +9,16 @@ app.get('/', function(req, res){
 });
 
 
+app.get('/api', function(req, res) {
+   res.status(200); 
+   res.send('<h1>API</h1>');
+});
+
+app.get('/recent', function(req, res) {
+    res.status(200);
+    res.send('<h1>Recent searches go here</h1>');
+});
+
 app.listen(app.get('port'), function(){
     console.log('Listening on port ' + app.get('port'));
 });
