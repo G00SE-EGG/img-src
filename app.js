@@ -14,7 +14,7 @@ app.get('/search*', function(req, res) {
    res.status(200); 
    var srch = req.url.replace(/[\/search\/%20]/g, ' ');
    
-   search.images(srch, {top:5}, function(err, data){
+   search.images(srch, {top:1}, function(err, data){
       if(err)console.error(err);
       console.log(data);
       res.send(data);
