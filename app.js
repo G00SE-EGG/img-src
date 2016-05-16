@@ -13,10 +13,11 @@ app.get('/', function(req, res){
 app.get('/search*', function(req, res) {
    res.status(200); 
    var srch = req.url.replace(/[\/search\/%20]/g, ' ');
-   
-   search.images(srch, {top:1}, function(err, data){
+   //var offset = req.url.split('?');
+   var offset = req.url.split('?')[1].split('=')[1].replace(/\&/g, '');
+   search.images(srch, {top:offset}, function(err, data){
       if(err)console.error(err);
-      console.log(data);
+      console.log(offset);
       res.send(data);
    });
    
