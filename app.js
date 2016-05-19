@@ -1,9 +1,21 @@
 var express = require("express");
 var Search = require("bing.search");
 var app = express();
+var mongoose = require('mongoose');
+var Recent = require("./SearchSchema");
 var search = new Search('wzPhvJlN7jnEVXF+Nf5RPwFx6nydyOzIcqlOQCBJlHM');
 app.set('port', process.env.PORT || 3000);
+
+var db = 'mongodb://localhost:27017/recentSearches';
+
 var testObj = [];
+//var dbObj = {};
+mongoose.connect(db, function(err, db){
+    if(err)console.error(err);
+    
+    console.log("Successfully connected to the db");
+});
+
 app.get('/', function(req, res){
     res.status(200);
    res.send('<h1>Hello, World</h1>'); 
@@ -35,12 +47,16 @@ app.get('/search*', function(req, res) {
           res.send(testObj);
       //}
       srch = "";
-      for(var j = 0; j < offset; j++)
-      {
-          testObj[j].url = "";
-          testObj[j].alttext = "";
-          testObj[j].thumbnail = "";
-      }
+
+for(var j = 0; j <testObj.length; j++)
+{
+    global.dbObj = new Recent({url : testObj[j].url, alttext : testObj[j].alttext, thumbnail : testObj[j].thumbnail});
+}
+      
+   
+       global.dbObj.save(function(err, dbObj){
+           if(err)console.error(err);
+       });
    });
    
    
@@ -48,7 +64,13 @@ app.get('/search*', function(req, res) {
 
 app.get('/recent', function(req, res) {
     res.status(200);
-    res.send('<h1>Recent searches go here</h1>');
+    Recent.find({})
+    .exec(function(err, recents){
+       if(err)console.error(err);
+       console.log(recents);
+       res.json(recents);
+    });
+    //res.send(    );
 });
 
 app.listen(app.get('port'), function(){
