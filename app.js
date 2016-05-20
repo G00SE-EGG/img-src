@@ -9,7 +9,7 @@ app.set('port', process.env.PORT || 3000);
 var db = 'mongodb://localhost:27017/recentSearches';
 
 var testObj = [];
-//var dbObj = {};
+var testArr = [];
 mongoose.connect(db, function(err, db){
     if(err)console.error(err);
     
@@ -50,16 +50,28 @@ app.get('/search*', function(req, res) {
 
 for(var j = 0; j <testObj.length; j++)
 {
-    global.dbObj = new Recent({url : testObj[j].url, alttext : testObj[j].alttext, thumbnail : testObj[j].thumbnail});
+   testArr.push({url : testObj[j].url, alttext : testObj[j].alttext, 
+thumbnail : testObj[j].thumbnail});
 }
-      //console.log(global.dbObj);
+
+Recent.create(testArr, function(err, data){//this adds an array into db
+    if(err)console.error(err);
+    /*for(var i = 0; i < data.length; i++)
+    {
+        console.log(data[i]);
+    }*/
+});
+
+/*global.dbObj = new Recent({url : testObj[j].url, alttext : testObj[j].alttext, 
+thumbnail : testObj[j].thumbnail});
+ */     //console.log(global.dbObj);
    
        /*global.dbObj.save(function(err, dbObj){
            if(err)console.error(err);
            console.log(dbObj);
        });*/
        
-       console.log(global.dbObj.length);
+       
    });
    
    
