@@ -52,11 +52,14 @@ for(var j = 0; j <testObj.length; j++)
 {
     global.dbObj = new Recent({url : testObj[j].url, alttext : testObj[j].alttext, thumbnail : testObj[j].thumbnail});
 }
-      
+      //console.log(global.dbObj);
    
-       global.dbObj.save(function(err, dbObj){
+       /*global.dbObj.save(function(err, dbObj){
            if(err)console.error(err);
-       });
+           console.log(dbObj);
+       });*/
+       
+       console.log(global.dbObj.length);
    });
    
    
@@ -64,12 +67,15 @@ for(var j = 0; j <testObj.length; j++)
 
 app.get('/recent', function(req, res) {
     res.status(200);
+    //res.send('<h1>Recent Searches</h1');
     Recent.find({})
     .exec(function(err, recents){
        if(err)console.error(err);
        console.log(recents);
+       
        res.json(recents);
     });
+    
     //res.send(    );
 });
 
