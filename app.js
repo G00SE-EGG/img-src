@@ -18,7 +18,12 @@ mongoose.connect(db, function(err, db){
 
 app.get('/', function(req, res){
     res.status(200);
-   res.send('<h1>Hello, World</h1>'); 
+    var html = '';
+    html = '<h1>Hello, World</h1>';
+    html += '<p>Please enter in a search query string to return image results</p>';
+    html += '<p>ex https://img-src-g00se-egg.c9users.io/search/derrick rose?offset=5</p>';
+    html += '<p>offset shows specified amount of results</p>';
+   res.send(html); 
 });
 
 function imgQuery(url, alttext, thumbnail)
@@ -36,30 +41,16 @@ app.get('/search*', function(req, res) {
    var offset = req.url.split('?')[1].split('=')[1].replace(/\&/g, '');
    console.log(srch);
    search.images(srch, {top:offset}, function(err, data){
-       console.log(global.BroadCnt);
+       //console.log(global.BroadCnt);
       if(err)console.error(err);
       var cnt = 0;
-      console.log(srch);
+      //console.log(srch);
       for(var i = 0; i < offset; i++)
       {
           testObj.push(new imgQuery(data[i]['url'], data[i]['title'], data[i]['thumbnail']['url'] ));
           cnt++;
       }
-          /*if(global.BroadCnt > 1)
-          {
-              for(var j = cnt; j < testObj.length; j++)
-              {
-                  res.send(testObj[j])
-              }
-              //console.log(j);
-          }
-          else
-          {
-              res.send(testObj);
-          }*/
           
-          console.log('current count is' + testObj.length);
-      //data = "";
 
 for(var j = 0; j <testObj.length; j++)
 {
@@ -82,7 +73,7 @@ app.get('/recent', function(req, res) {
     Recent.find({})
     .exec(function(err, recents){
        if(err)console.error(err);
-       console.log(recents);
+       //console.log(recents);
        
        res.json(recents);
     });
