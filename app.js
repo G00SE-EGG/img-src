@@ -40,16 +40,16 @@ app.get('/search*', function(req, res) {
    var srch = req.url.split('/')[2].split('?')[0].replace(/%20/g, ' ');//.replace(/[\/search\/%20]/g, ' ');
    //var offset = req.url.split('?');
    var offset = req.url.split('?')[1].split('=')[1].replace(/\&/g, '');
+   var html = '';
    console.log(srch);
    search.images(srch, {top:offset}, function(err, data){
        //console.log(global.BroadCnt);
       if(err)console.error(err);
-      var cnt = 0;
       //console.log(srch);
       for(var i = 0; i < offset; i++)
       {
           testObj.push(new imgQuery(data[i]['url'], data[i]['title'], data[i]['thumbnail']['url'] ));
-          cnt++;
+          html += '<p><a href=' + testObj[i].url + '>' + testObj[i].alttext + '</a> </p>';
       }
           
 
