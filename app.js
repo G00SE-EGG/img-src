@@ -6,7 +6,7 @@ var Recent = require("./SearchSchema");
 var search = new Search('wzPhvJlN7jnEVXF+Nf5RPwFx6nydyOzIcqlOQCBJlHM');
 app.set('port', process.env.PORT || 3000);
 
-var db = 'mongodb://localhost:27017/recentSearches';
+var db = 'mongodb://heroku_z5x24bg8:86g862ksdl6agi5mncge3352dt@ds011863.mlab.com:11863/heroku_z5x24bg8';
 
 var testObj = [];
 var testArr = [];
@@ -23,6 +23,7 @@ app.get('/', function(req, res){
     html += '<p>Please enter in a search query string to return image results</p>';
     html += '<p>ex https://im-src.herokuapp.com/search/derrick rose?offset=5</p>';
     html += '<p>offset shows specified amount of results</p>';
+    html += '<p>https://im-src.herokuapp.com/recent shows recent searches</p>';
    res.send(html); 
 });
 
