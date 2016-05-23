@@ -49,7 +49,7 @@ app.get('/search*', function(req, res) {
       for(var i = 0; i < offset; i++)
       {
           testObj.push(new imgQuery(data[i]['url'], data[i]['title'], data[i]['thumbnail']['url'] ));
-          html += '<p>{ url: <a href=' + testObj[i].url + '>,<br > title: ' + testObj[i].alttext + '</a> }</p>';
+          html += '<p>{<br > url: <a href=' + testObj[i].url + '>' + testObj[i].url + '</a>,<br > title: ' + testObj[i].alttext + '<br />}</p>';
       }
           
 
