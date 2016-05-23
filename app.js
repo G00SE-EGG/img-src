@@ -30,23 +30,36 @@ function imgQuery(url, alttext, thumbnail)
 
 app.get('/search*', function(req, res) {
    res.status(200); 
+   global.BroadCnt = 0;
    var srch = req.url.split('/')[2].split('?')[0].replace(/%20/g, ' ');//.replace(/[\/search\/%20]/g, ' ');
    //var offset = req.url.split('?');
    var offset = req.url.split('?')[1].split('=')[1].replace(/\&/g, '');
    console.log(srch);
    search.images(srch, {top:offset}, function(err, data){
+       console.log(global.BroadCnt);
       if(err)console.error(err);
-      
+      var cnt = 0;
       console.log(srch);
       for(var i = 0; i < offset; i++)
       {
           testObj.push(new imgQuery(data[i]['url'], data[i]['title'], data[i]['thumbnail']['url'] ));
+          cnt++;
       }
-      //for(var j = 0; j < offset; j++)
-      //{
-          res.send(testObj);
-      //}
-      srch = "";
+          /*if(global.BroadCnt > 1)
+          {
+              for(var j = cnt; j < testObj.length; j++)
+              {
+                  res.send(testObj[j])
+              }
+              //console.log(j);
+          }
+          else
+          {
+              res.send(testObj);
+          }*/
+          
+          console.log('current count is' + testObj.length);
+      //data = "";
 
 for(var j = 0; j <testObj.length; j++)
 {
@@ -56,25 +69,11 @@ thumbnail : testObj[j].thumbnail});
 
 Recent.create(testArr, function(err, data){//this adds an array into db
     if(err)console.error(err);
-    /*for(var i = 0; i < data.length; i++)
-    {
-        console.log(data[i]);
-    }*/
 });
-
-/*global.dbObj = new Recent({url : testObj[j].url, alttext : testObj[j].alttext, 
-thumbnail : testObj[j].thumbnail});
- */     //console.log(global.dbObj);
-   
-       /*global.dbObj.save(function(err, dbObj){
-           if(err)console.error(err);
-           console.log(dbObj);
-       });*/
-       
-       
+res.send(testObj);
    });
    
-   
+   testObj.length = 0;
 });
 
 app.get('/recent', function(req, res) {
