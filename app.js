@@ -62,7 +62,7 @@ thumbnail : testObj[j].thumbnail});
 Recent.create(testArr, function(err, data){//this adds an array into db
     if(err)console.error(err);
 });
-res.send(html);
+res.send(JSON.stringify(html));
    });
    
    testObj.length = 0;
