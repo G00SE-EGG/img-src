@@ -21,7 +21,7 @@ app.get('/', function(req, res){
     var html = '';
     html = '<h1>Hello, World</h1>';
     html += '<p>Please enter in a search query string to return image results</p>';
-    html += '<p>ex https://img-src-g00se-egg.c9users.io/search/derrick rose?offset=5</p>';
+    html += '<p>ex https://im-src.herokuapp.com/search/derrick rose?offset=5</p>';
     html += '<p>offset shows specified amount of results</p>';
    res.send(html); 
 });
